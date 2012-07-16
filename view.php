@@ -130,6 +130,7 @@
 	            <label class="control-label">Token request url</label>
 	            <div class="controls">
 	              <input type="text" required name="url_access_token" value="<?php echo $session->url_access_token; ?>" class="input-xlarge">
+	              <p class="help-block">The client details are automatically added</p>
 	            </div>
 	        </div>
 	        
@@ -167,6 +168,7 @@
 	            <label class="control-label">Authorisation url</label>
 	            <div class="controls">
 	              <input required type="url" name="url_authorize" value="<?php echo $session->url_authorize; ?>" class="input-xlarge">
+	              <p class="help-block">The client details are automatically added</p>
 	            </div>
 	        </div>
 	        
