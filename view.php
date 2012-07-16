@@ -29,6 +29,18 @@
     </div>
 
     <div class="container">
+    
+    <?php if(isset($error) && $error): ?>
+    <div class="alert alert-error">
+        <?php echo $error; ?>
+    </div>
+    <?php endif; ?>
+    
+    <?php if(isset($warning) && $warning): ?>
+    <div class="alert">
+        <?php echo $warning; ?>
+    </div>
+    <?php endif; ?>
 
   	<?php if($session->api_response): ?>
 	  <div class="page-header">

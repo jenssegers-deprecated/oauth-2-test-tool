@@ -1,7 +1,6 @@
 <?php
 include ('tools.php');
 
-
 /* -------------------------------------------
  * Setup session
  * ------------------------------------------- */
@@ -12,7 +11,6 @@ $session = new Session();
 foreach ($_POST as $key => $val) {
     $session->$key = $val;
 }
-
 
 /* -------------------------------------------
  * Detect callback url
@@ -26,13 +24,11 @@ if (isset($_SERVER['HTTP_HOST'])) {
 }
 $callback_url = $site_url . 'callback';
 
-
 /* -------------------------------------------
  * Setup OAuth2
  * ------------------------------------------- */
 include ('OAuth2.php');
 $oauth = new OAuth2($session->client_id, $session->client_secret, $callback_url);
-
 
 /* -------------------------------------------
  * POST action
@@ -43,12 +39,23 @@ if (isset($_SERVER['PATH_INFO'])) {
     $action = '';
 }
 
+// malformed url
+if ($pos = strpos($action, '&')) {
+    $get = substr($action, $pos + 1);
+    $action = substr($action, 0, $pos);
+    parse_str($get, $get);
+    $_GET = array_merge($_GET, $get);
+    
+    $warning = 'Malformed callback URL';
+}
+
 switch ($action) {
     case 'authorize' :
         $params = array();
         $params['client_id'] = $session->client_id;
         $params['response_type'] = 'code';
         $params['redirect_uri'] = $callback_url;
+        
         redirect($session->url_authorize, $params);
         break;
     
@@ -65,7 +72,23 @@ switch ($action) {
         $params['code'] = $session->request_code;
         
         $session->access_token_response = $oauth->getAccessToken($session->url_access_token, $params);
-        $session->access_token = json_decode($session->access_token_response)->access_token;
+        
+        if (!$session->access_token_response) {
+            $error = 'No access token response';
+        } else {
+            $json = json_decode($session->access_token_response);
+            
+            if (!$json) {
+                $error = 'Access token response was not JSON';
+            } else {
+                $session->access_token = $json->access_token;
+                
+                if (!$session->access_token) {
+                    $error = 'Could not find access token in response';
+                }
+            }
+        }
+        
         break;
     
     case 'api' :
@@ -74,12 +97,18 @@ switch ($action) {
         $params['access_token'] = $session->access_token;
         $session->api_response = $oauth->fetch($session->api_endpoint, $params, $session->api_method);
         
+        if (!$session->api_response) {
+            $error = 'No api response';
+        }
+        
         // test if json
         $json = json_decode($session->api_response);
         if ($json) {
             $session->api_response = indent($session->api_response);
-        } 
-       
+        } else {
+            $warning = 'API response was not JSON';
+        }
+        
         break;
     
     case 'clear' :
@@ -89,7 +118,6 @@ switch ($action) {
         redirect($site_url);
         break;
 }
-
 
 /* -------------------------------------------
  * Show view
