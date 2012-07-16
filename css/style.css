@@ -1,12 +1,17 @@
 body {
-	padding-top: 70px;
+	padding-top: 20px;
 	padding-bottom: 40px;
 }
 
 .page-header {
-	border-bottom: 0;
-	margin-top: 10px;
+	border: 0;
+	margin-top: 0;
 	margin-bottom: 10px;
+	padding :0;
+}
+
+.page-header h1 {
+    border: 0;
 }
 
 form {
@@ -35,5 +40,4 @@ pre {
 .anchor {
 	position: relative;
 	top: -75px;
-	display: inline-block;
 }
