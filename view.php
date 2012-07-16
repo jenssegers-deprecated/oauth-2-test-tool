@@ -86,9 +86,17 @@
 	            <label class="control-label">Method</label>
 	            <div class="controls">
 	               <select name="api_method">
-	                  <option value="get">GET</option>
-	               	  <option value="post">POST</option>
+	                  <option value="get" <?php echo $session->api_method == 'get' ? 'selected' : ''; ?>>GET</option>
+	               	  <option value="post" <?php echo $session->api_method == 'post' ? 'selected' : ''; ?>>POST</option>
 	               </select>
+			    </div>
+	        </div>
+	        
+	        <div class="control-group">
+	            <label class="control-label">RAW body</label>
+	            <div class="controls">
+	               <textarea name="api_body" class="input-xlarge" placeholder="key1=value1&key2=value2"><?php echo $session->api_body; ?></textarea>
+			       <p class="help-block">This query string parameters will be added as GET or POST data</p>
 			    </div>
 	        </div>
 	        

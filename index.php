@@ -96,7 +96,12 @@ switch ($action) {
         break;
     
     case 'api' :
-        $params = array();
+    	if ($session->api_body) {
+    		parse_str($session->api_body, $params);
+    	} else {
+    		$params = array();
+    	}
+    	
         $params['oauth_token'] = $session->access_token;
         $params['access_token'] = $session->access_token;
         $session->api_response = $oauth->fetch($session->api_endpoint, $params, $session->api_method);

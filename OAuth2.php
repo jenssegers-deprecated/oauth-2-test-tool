@@ -90,10 +90,6 @@ class OAuth2 {
         $json = $this->makeRequest($url, $params, $auth_header);
         $data = json_decode($json);
         
-        /*if (isset($data->error)) {
-            $this->error = 'Did not receive refresh token';
-            return FALSE;
-        }*/
         return $data;
     }
     
@@ -133,6 +129,7 @@ class OAuth2 {
                 curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "DELETE");
                 break;
         }
+        
         curl_setopt($curl, CURLOPT_URL, $path);
         
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
