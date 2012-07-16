@@ -8,7 +8,7 @@
     <meta name="author" content="">
 
     <!-- Le styles -->
-    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -22,7 +22,20 @@
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
-          <a class="brand" href="#">Oauth 2 test tool</a>
+          <a class="brand" href="<?php echo $site_url; ?>">Oauth 2 test tool</a>
+          
+            <ul class="nav">
+              <li>
+                <a href="#client-details">Client details</a>
+              </li>
+              <li>
+                <a href="#token-request">Token request</a>
+              </li>
+              <li>
+                <a href="#api-tester">API tester</a>
+              </li>
+            </ul>
+          
           <a href="clear" class="btn btn-danger pull-right">Reset</a>
         </div>
       </div>
@@ -55,7 +68,8 @@
 
 	  <?php if($session->access_token_response): ?>	  
 	  <div class="page-header">
-      <h1>Test endpoints</h1>
+	  <a name="api-tester" class="anchor"></a>
+      <h1>Test API endpoints</h1>
       </div>
       
       <div class="well">
@@ -84,8 +98,7 @@
           </div>
         </form>
       </div>
-	  
-	  
+	 
 	  
       <div class="page-header">
       <h1>Access token response</h1>
@@ -100,6 +113,7 @@
       
       <?php if($session->request_code): ?>
       <div class="page-header">
+      <a name="token-request" class="anchor"></a>
       <h1>Access token request</h1>
       </div>
       
@@ -128,8 +142,8 @@
       <?php endif; ?>
       
 
-
 	  <div class="page-header">
+	  <a name="client-details" class="anchor"></a>
       <h1>Client details</h1>
       </div>
       

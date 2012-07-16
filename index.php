@@ -81,10 +81,12 @@ switch ($action) {
             if (!$json) {
                 $error = 'Access token response was not JSON';
             } else {
-                $session->access_token = $json->access_token;
-                
-                if (!$session->access_token) {
+            	$session->access_token_response = indent($session->access_token_response);
+            	
+                if (!isset($json->access_token)) {
                     $error = 'Could not find access token in response';
+                } else {
+                    $session->access_token = $json->access_token;
                 }
             }
         }
@@ -117,6 +119,13 @@ switch ($action) {
         }
         redirect($site_url);
         break;
+}
+
+/* -------------------------------------------
+ * Cleanup
+ * ------------------------------------------- */
+if ($action != 'api') {
+	$session->api_response = '';
 }
 
 /* -------------------------------------------
