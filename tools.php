@@ -1,7 +1,11 @@
 <?php
 
 function redirect($path, $params = array()) {
-    header('Location: ' . $path . '?' . http_build_query($params));
+    if (strstr('?', $path)) {
+        header('Location: ' . $path . '&' . http_build_query($params));
+    } else {
+        header('Location: ' . $path . '?' . http_build_query($params));
+    }
 }
 
 function indent($json) {

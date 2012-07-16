@@ -24,11 +24,13 @@ if (isset($_SERVER['HTTP_HOST'])) {
 }
 $callback_url = $site_url . 'callback';
 
+
 /* -------------------------------------------
  * Setup OAuth2
  * ------------------------------------------- */
 include ('OAuth2.php');
 $oauth = new OAuth2($session->client_id, $session->client_secret, $callback_url);
+
 
 /* -------------------------------------------
  * POST action
@@ -127,6 +129,7 @@ switch ($action) {
 if ($action != 'api') {
 	$session->api_response = '';
 }
+
 
 /* -------------------------------------------
  * Show view
