@@ -1,6 +1,7 @@
 <?php
 include ('tools.php');
 
+
 /* -------------------------------------------
  * Setup session
  * ------------------------------------------- */
@@ -11,6 +12,7 @@ $session = new Session();
 foreach ($_POST as $key => $val) {
     $session->$key = $val;
 }
+
 
 /* -------------------------------------------
  * Detect callback url
@@ -24,11 +26,13 @@ if (isset($_SERVER['HTTP_HOST'])) {
 }
 $callback_url = $site_url . 'callback';
 
+
 /* -------------------------------------------
  * Setup OAuth2
  * ------------------------------------------- */
 include ('OAuth2.php');
 $oauth = new OAuth2($session->client_id, $session->client_secret, $callback_url);
+
 
 /* -------------------------------------------
  * POST action
@@ -69,6 +73,13 @@ switch ($action) {
         $params['oauth_token'] = $session->access_token;
         $params['access_token'] = $session->access_token;
         $session->api_response = $oauth->fetch($session->api_endpoint, $params, $session->api_method);
+        
+        // test if json
+        $json = json_decode($session->api_response);
+        if ($json) {
+            $session->api_response = indent($session->api_response);
+        } 
+       
         break;
     
     case 'clear' :
@@ -78,6 +89,7 @@ switch ($action) {
         redirect($site_url);
         break;
 }
+
 
 /* -------------------------------------------
  * Show view
