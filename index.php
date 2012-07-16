@@ -22,14 +22,17 @@ if (isset($_SERVER['HTTP_HOST'])) {
 } else {
     $site_url = 'http://localhost/';
 }
-$callback_url = $site_url . 'callback';
+
+if(!$session->callback_url) {
+	$session->callback_url = $site_url . 'callback';
+}
 
 
 /* -------------------------------------------
  * Setup OAuth2
  * ------------------------------------------- */
 include ('OAuth2.php');
-$oauth = new OAuth2($session->client_id, $session->client_secret, $callback_url);
+$oauth = new OAuth2($session->client_id, $session->client_secret, $session->callback_url);
 
 
 /* -------------------------------------------
@@ -56,7 +59,7 @@ switch ($action) {
         $params = array();
         $params['client_id'] = $session->client_id;
         $params['response_type'] = 'code';
-        $params['redirect_uri'] = $callback_url;
+        $params['redirect_uri'] = $session->callback_url;
         
         redirect($session->url_authorize, $params);
         break;
@@ -70,7 +73,7 @@ switch ($action) {
         $params['client_id'] = $session->client_id;
         $params['client_secret'] = $session->client_secret;
         $params['grant_type'] = 'authorization_code';
-        $params['redirect_uri'] = $callback_url;
+        $params['redirect_uri'] = $session->callback_url;
         $params['code'] = $session->request_code;
         
         $session->access_token_response = $oauth->getAccessToken($session->url_access_token, $params);
@@ -108,14 +111,14 @@ switch ($action) {
         
         if (!$session->api_response) {
             $error = 'No api response';
-        }
-        
-        // test if json
-        $json = json_decode($session->api_response);
-        if ($json) {
-            $session->api_response = indent($session->api_response);
         } else {
-            $warning = 'API response was not JSON';
+	        // test if json
+	        $json = json_decode($session->api_response);
+	        if ($json) {
+	            $session->api_response = indent($session->api_response);
+	        } else {
+	            $warning = 'API response was not JSON';
+	        }
         }
         
         break;

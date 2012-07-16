@@ -183,7 +183,7 @@
 	        <div class="control-group">
 	            <label class="control-label">Callback url</label>
 	            <div class="controls">
-	              <span class="input-xlarge uneditable-input"><?php echo $callback_url; ?></span>
+	              <input type="url" class="input-xlarge" name="callback_url" value="<?php echo $session->callback_url; ?>">
 	              <p class="help-block">Add this callback url to your service's control panel</p>
 	            </div>
 	        </div>
