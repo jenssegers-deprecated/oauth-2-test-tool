@@ -99,6 +99,16 @@
 	        </div>
 	        
 	        <div class="control-group">
+	            <label class="control-label">Authorization</label>
+	            <div class="controls">
+	               <label class="checkbox">
+	                <input type="checkbox" name="api_authorization_header" value="1" <?php echo $session->api_authorization_header == '1' ? 'checked' : ''; ?>>
+	                Use authorization header instead of GET parameters
+	              </label>
+			    </div>
+	        </div>
+	        
+	        <div class="control-group">
 	            <label class="control-label">RAW body</label>
 	            <div class="controls">
 	               <textarea name="api_body" class="input-xlarge" placeholder="key1=value1&key2=value2"><?php echo $session->api_body; ?></textarea>

@@ -6,11 +6,14 @@ if ($session->api_body) {
     $params = array();
 }
 
-$params['oauth_token'] = $session->access_token;
-//$params['access_token'] = $session->access_token;
-
 $header = array();
-$header[] = 'Authorization: OAuth ' . $session->access_token;
+
+if($session->api_authorization_header) {
+	$header[] = 'Authorization: OAuth ' . $session->access_token;
+} else {
+	$params['oauth_token'] = $session->access_token;
+	//$params['access_token'] = $session->access_token;
+}
 
 $session->api_response = $curl->exec($session->api_endpoint, $session->api_method, $params, $header);
 
