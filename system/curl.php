@@ -52,7 +52,6 @@ class curl {
         
         $response = curl_exec($curl);
         $info = curl_getinfo($curl);
-        curl_close($curl);
         
         if ($info['download_content_length'] <= 0) {
             $info['download_content_length'] = $info['size_download'];
@@ -61,11 +60,14 @@ class curl {
         $this->header = substr($response, 0, $info['header_size']);
         $this->response = substr($response, -$info['download_content_length']);
         
+        
         if ($this->response === FALSE) {
             $this->error = curl_error($curl);
+            curl_close($curl);
             return FALSE;
         }
         
+        curl_close($curl);
         return $this->response;
     }
 }
