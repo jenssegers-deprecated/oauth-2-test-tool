@@ -8,6 +8,7 @@ class curl {
     public $response = '';
     public $header = '';
     public $error = FALSE;
+    public $url = '';
     
     /**
      * CURL request
@@ -39,19 +40,24 @@ class curl {
                 break;
         }
         
+        $this->url = $path;
         curl_setopt($curl, CURLOPT_URL, $path);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
         curl_setopt($curl, CURLOPT_HEADER, 1);
         
         if ($auth_header !== FALSE) {
-            curl_setopt($curl, CURLOPT_HTTPHEADER, array('Authorization: ' . $auth_header));
+            curl_setopt($curl, CURLOPT_HTTPHEADER, $auth_header);
         }
         
         $response = curl_exec($curl);
-        
         $info = curl_getinfo($curl);
         curl_close($curl);
+        
+        if ($info['download_content_length'] <= 0) {
+            $info['download_content_length'] = $info['size_download'];
+        }
+        
         $this->header = substr($response, 0, $info['header_size']);
         $this->response = substr($response, -$info['download_content_length']);
         

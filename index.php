@@ -6,6 +6,7 @@ $curl = new curl();
 /* -------------------------------------------
  * Setup session
  * ------------------------------------------- */
+session_name('oauth-test-tool');
 session_start();
 include ('system/session.php');
 $session = new Session();

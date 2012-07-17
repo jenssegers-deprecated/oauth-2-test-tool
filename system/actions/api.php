@@ -7,9 +7,12 @@ if ($session->api_body) {
 }
 
 $params['oauth_token'] = $session->access_token;
-$params['access_token'] = $session->access_token;
+//$params['access_token'] = $session->access_token;
 
-$session->api_response = $curl->exec($session->api_endpoint, $session->api_method, $params);
+$header = array();
+$header[] = 'Authorization: OAuth ' . $session->access_token;
+
+$session->api_response = $curl->exec($session->api_endpoint, $session->api_method, $params, $header);
 
 if (!$session->api_response) {
     $error = 'No api response';

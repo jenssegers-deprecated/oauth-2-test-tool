@@ -5,6 +5,8 @@ if (!isset($_GET['state'])) {
 } else {
     if ($_GET['state'] != $session->state) {
         $warning = 'State parameter did not match';
+    } else {
+    	$info = 'State parameter matches';
     }
 }
 

@@ -43,6 +43,12 @@
 
     <div class="container">
     
+    <?php if(isset($info) && $info): ?>
+    <div class="alert alert-info">
+        <?php echo $info; ?>
+    </div>
+    <?php endif; ?>
+    
     <?php if(isset($error) && $error): ?>
     <div class="alert alert-error">
         <?php echo $error; ?>
