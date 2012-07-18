@@ -27,16 +27,16 @@ class curl {
                 curl_setopt($curl, CURLOPT_HTTPGET, TRUE);
                 break;
             case 'POST' :
-                curl_setopt($curl, CURLOPT_POSTFIELDS, $params);
+            	curl_setopt($curl, CURLOPT_POSTFIELDS, $params);
                 curl_setopt($curl, CURLOPT_POST, TRUE);
                 break;
             case 'PUT' :
-                curl_setopt($curl, CURLOPT_POSTFIELDS, $params);
                 curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
+                curl_setopt($curl, CURLOPT_POSTFIELDS, $params);
                 break;
             case 'DELETE' :
-                curl_setopt($curl, CURLOPT_POSTFIELDS, $params);
                 curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "DELETE");
+                curl_setopt($curl, CURLOPT_POSTFIELDS, $params);
                 break;
         }
         

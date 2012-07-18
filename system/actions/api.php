@@ -1,4 +1,7 @@
 <?php
+if(!$_POST['api_authorization_header']) {
+	$session->api_authorization_header = FALSE;
+}
 
 if ($session->api_body) {
     parse_str($session->api_body, $params);

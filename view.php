@@ -94,6 +94,8 @@
 	               <select name="api_method">
 	                  <option value="get" <?php echo $session->api_method == 'get' ? 'selected' : ''; ?>>GET</option>
 	               	  <option value="post" <?php echo $session->api_method == 'post' ? 'selected' : ''; ?>>POST</option>
+	               	  <option value="put" <?php echo $session->api_method == 'put' ? 'selected' : ''; ?>>PUT</option>
+	               	  <option value="delete" <?php echo $session->api_method == 'delete' ? 'selected' : ''; ?>>DELETE</option>
 	               </select>
 			    </div>
 	        </div>
